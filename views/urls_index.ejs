@@ -3,14 +3,17 @@
     <title>TinyApp</title>
   </head>
     <body>
-      <h2>Loop</h2>
+      <h2>URLs</h2>
       <ul>
         <% for (var key in urls) { %>
-          <li> shortURL
-            <%= key %> longURL: %>
+          <li> shortURL:
+            <%= key        %> longURL: %>
             <%= urls[key] %>
             <form method="POST" action="/urls/<%= key %>/delete">
-              <button>DELETE :wastebasket </button>
+              <button>DELETE &#x1f5d1 </button>
+            </form>
+            <form method="GET" action="/urls/<%= key %>">
+              <button> edit </button>
             </form>
           </li>
         <%} %>

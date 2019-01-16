@@ -1,5 +1,22 @@
-<%= locals.shortURL %>
+
+
+<html lang="en">
+  <head>
+    <title>TinyApp</title>
+  </head>
+    <body>
 
 
 
-<%= locals.longURL %>
+
+
+      <form method="POST" action="/urls/" style="margin:150px;">
+        <label for="shortURL">Short URL: <%= shortURL %></label>
+        <input id="shortURL" type="text" name="longURL" placeholder=<%= longURL %>
+        <input type="submit" value>
+      </form>
+
+
+
+    </body>
+</html>
