@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
 
-var urlDatabase = {
+var urlDatabase = {  //urlDatabase: keys are short url, values are long url
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
 };
@@ -73,6 +73,13 @@ app.get("/u/:shortURL", (req, res) => {
 
 
 
+app.post('/urls/:id/delete', (req, res) => {
+
+  delete urlDatabase[req.params.id];
+  res.redirect('/urls');
+});
+
+
 
 
 
@@ -93,4 +100,4 @@ function generateRandomString() {
   return text;
 }
 
-// generateRandomString();
+

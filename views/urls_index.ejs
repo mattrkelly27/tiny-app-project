@@ -1,23 +1,19 @@
 <html lang="en">
-<head>
-  <title>TinyApp</title>
-</head>
-<body>
-
-
-<h2>Loop</h2>
-
-<ul>
-    <% for (var key in urls) { %>
-      <li> shortURL
-      <%= key %> + longURL:
-   <%= urls[key] %>
-   <li>
-   <%} %>
-</ul>
-
-
-
-
-</body>
+  <head>
+    <title>TinyApp</title>
+  </head>
+    <body>
+      <h2>Loop</h2>
+      <ul>
+        <% for (var key in urls) { %>
+          <li> shortURL
+            <%= key %> longURL: %>
+            <%= urls[key] %>
+            <form method="POST" action="/urls/<%= key %>/delete">
+              <button>DELETE :wastebasket </button>
+            </form>
+          </li>
+        <%} %>
+      </ul>
+    </body>
 </html>
