@@ -65,6 +65,8 @@ app.get("/urls/new", (req, res) => {
 
 app.post('/urls/login', (req, res) => {
 
+  res.render("urls_index", templateVars);
+
   res.cookie("username", req.body.username);
   res.redirect('/urls');
 
