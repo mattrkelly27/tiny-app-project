@@ -1,4 +1,21 @@
-<header>
-  <title>TinyApp</title>
-</header>
+<header>TINYAPP</header>
+<p><%= username %></p>
+
+<% if (username) {%>
+<form method="POST" action="/urls/login">
+  <label for="login"> LOGIN: <%= username %></label>
+  <input type="text" name="username" >
+  <button>GO</button>
+</form>
+
+<%} else {%>
+<form method="POST" action="/urls/logout">
+  <label for="login"> LOGOUT: <%= username %></label>
+  <input type="text" name="username" >
+  <button>GO</button>
+</form>
+<%} %>
+
+
+
 

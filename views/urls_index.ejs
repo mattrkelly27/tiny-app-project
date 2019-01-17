@@ -1,22 +1,25 @@
+<!DOCTYPE html>
+
 <html lang="en">
+<% include ./partials/_header %>
   <head>
     <title>TinyApp</title>
   </head>
-    <body>
-      <h2>URLs</h2>
-      <ul>
-        <% for (var key in urls) { %>
-          <li> shortURL:
-            <%= key        %> longURL: %>
-            <%= urls[key] %>
-            <form method="POST" action="/urls/<%= key %>/delete">
-              <button>DELETE &#x1f5d1 </button>
-            </form>
-            <form method="GET" action="/urls/<%= key %>">
-              <button> edit </button>
-            </form>
-          </li>
-        <%} %>
-      </ul>
-    </body>
+  <body>
+    <h2>URLs</h2>
+    <ul>
+      <% for (var key in urls) { %>
+        <li> shortURL:
+          <%= key        %> longURL: %>
+          <%= urls[key] %>
+          <form method="POST" action="/urls/<%= key %>/delete">
+            <button>DELETE &#x1f5d1 </button>
+          </form>
+          <form method="GET" action="/urls/<%= key %>">
+            <button> edit </button>
+          </form>
+        </li>
+      <% } %>
+    </ul>
+  </body>
 </html>
