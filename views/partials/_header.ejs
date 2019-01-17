@@ -1,20 +1,19 @@
-<header>TINYAPP</header>
+<header>TINYAPPxdfgsdfg</header>
 <p><%= username %></p>
 
-<% if (username) {%>
-<form method="POST" action="/urls/login">
-  <label for="login"> LOGIN: <%= username %></label>
+<% if (!username) { %>
+  <form method="POST" action="/urls/login">
+  <label for="login"> LOGIN: </label>
   <input type="text" name="username" >
   <button>GO</button>
 </form>
 
-<%} else {%>
+<% } else { %>
 <form method="POST" action="/urls/logout">
-  <label for="login"> LOGOUT: <%= username %></label>
-  <input type="text" name="username" >
+  <label for="logout"> LOGOUT <%= username %></label>
   <button>GO</button>
 </form>
-<%} %>
+<% } %>
 
 
 
