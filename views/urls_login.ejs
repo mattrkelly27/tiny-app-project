@@ -6,27 +6,26 @@
     <body>
       <% include partials/_header %>
 
-      <% if (!username) { %>
-        <form method="POST" action="/urls/login">
+      <% if (!user_ID) { %>
+        <form action="/login" method="POST" >
           <label for="login"> LOGIN: </label>
-          <input type="text" name="username" >
-          <button>GO</button>
+          <label for="email"> enter an email: </label>
+          <input type="email" name="email">
+          <label for="password"> enter a password: </label>
+          <input type="password" name="password">
+          <button> submit </button>
         </form>
 
       <% } else { %>
+
+
       <form method="POST" action="/urls/logout">
-        <label for="logout"> LOGOUT <%= username %></label>
+        <label for="logout"> LOGOUT: </label>
         <button>GO</button>
       </form>
+
       <% } %>
 
-      <form action="/login" method="POST" >
-        <label for="email"> enter an email: </label>
-        <input type="email" name="email">
-        <label for="password"> enter a password: </label>
-        <input type="password" name="password">
-        <button> submit </button>
-      </form>
 
     </body>
 </html>

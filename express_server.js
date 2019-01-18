@@ -68,7 +68,7 @@ app.get("/hello", (req, res) => {
 
 app.get("/urls", (req, res) => {
   let templateVars = {
-    username: req.cookies.username,
+    user_ID: req.cookies.user_ID,
     urls: urlDatabase
   };
   res.render("urls_index", templateVars);
@@ -82,7 +82,7 @@ app.get("/urls/new", (req, res) => {
   let templateVars = {
     shortURL: req.params.id,
     longURL: urlDatabase[req.params.id],
-    username: req.cookies.user_ID
+    user_ID: req.cookies.user_ID
   };
   res.render("urls_new", templateVars);
 });
@@ -91,7 +91,7 @@ app.get("/urls/new", (req, res) => {
 
 
 app.post('/urls/login', (req, res) => {
-  res.cookie("username", req.body.username);
+  res.cookie("user_ID", req.body.user_ID);
   res.redirect('/urls');
 });
 
@@ -99,7 +99,7 @@ app.post('/urls/login', (req, res) => {
 
 
 app.post('/urls/logout', (req, res) => {
-  res.clearCookie("username", req.body.username);
+  res.clearCookie("user_ID", req.body.user_ID);
   res.redirect('/urls');
 });
 
@@ -119,7 +119,7 @@ app.get("/urls/:id", (req, res) => {
   let templateVars = {
     shortURL: req.params.id,
     longURL: urlDatabase[req.params.id],
-    username: users[req.params.user_ID]
+    user_ID: users[req.params.user_ID]
   };
 
   console.log(req.params.user_ID);
@@ -163,7 +163,7 @@ app.get("/register", (req, res) => {
   let templateVars = {
     shortURL: req.params.id,
     longURL: urlDatabase[req.params.id],
-    username: users[req.body.user_ID],   ////////
+    user_ID: users[req.body.user_ID],   ////////
     email: req.body.email,
     password: req.body.email
   };
@@ -181,12 +181,12 @@ app.post('/register', (req, res) => {
     return console.log("400 bad request");
   }
 
-  let user_id = generateRandomString();
-  users[user_id] = { id: user_id, email: req.body.email, password: req.body.password }
+  let user_ID = generateRandomString();
+  users[user_ID] = { id: user_ID, email: req.body.email, password: req.body.password }
 
   res.cookie("email", req.body.email);
   res.cookie("password", req.body.password);
-  res.cookie("user_id", user_id);
+  res.cookie("user_ID", user_ID);
 
   res.redirect('/urls');
 });
@@ -199,7 +199,7 @@ app.get("/login", (req, res) => {
    let templateVars = {
     shortURL: req.params.id,
     longURL: urlDatabase[req.params.id],
-    username: users[req.body.user_ID],   ////////
+    user_ID: users[req.body.user_ID],
     email: req.body.email,
     password: req.body.email
   };
@@ -214,12 +214,12 @@ app.post('/login', (req, res) => {
 
   let userFound = checkUserNamePassword(req.body.email, req.body.password);
   if(userFound){
-    res.cookie('user_id', userFound.id);
+    res.cookie('user_ID', userFound.id);
     res.redirect('/urls');
     //redirect him to the urls
 
   } else{
-    res.send("Sorry!. The email not found in the database");
+    res.send("403 Forbidden")
   }
 });
 
@@ -237,18 +237,21 @@ app.listen(PORT, () => {
 
 
 function checkUserNamePassword(email, password){
-  for(const userId in users){
+  for (const userId in users) {
     const user = users[userId];
-    if(user.email === email && user.password === password){
+    if( user.email === email && user.password === password) {
       return users[userId];
     }
   }
 }
 
-function isEmailTaken(email){
-  for(const userId in users){
+
+
+
+function isEmailTaken(email) {
+  for (const userId in users) {
     const user = users[userId];
-    if(user.email === email){
+    if (user.email === email) {
       return true;
     }
   }
