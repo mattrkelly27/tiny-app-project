@@ -1,19 +1,22 @@
 <header>TINYAPP</header>
 <p><%= username %></p>
 
-<% if (!username) { %>
-  <form method="POST" action="/urls/login">
+<form method="POST" action="/login">
   <label for="login"> LOGIN: </label>
-  <input type="text" name="username" >
   <button>GO</button>
 </form>
 
-<% } else { %>
-<form method="POST" action="/urls/logout">
-  <label for="logout"> LOGOUT <%= username %></label>
+<form method="POST" action="/register">
+  <label for="register"> REGISTER: </label>
   <button>GO</button>
 </form>
-<% } %>
+
+
+<br>
+
+
+
+</br>
 
 
 

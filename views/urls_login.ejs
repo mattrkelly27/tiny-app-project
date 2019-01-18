@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Tiny App -- LOGIN</title>
+  </head>
+    <body>
+      <% include partials/_header %>
+
+      <% if (!username) { %>
+        <form method="POST" action="/urls/login">
+          <label for="login"> LOGIN: </label>
+          <input type="text" name="username" >
+          <button>GO</button>
+        </form>
+
+      <% } else { %>
+      <form method="POST" action="/urls/logout">
+        <label for="logout"> LOGOUT <%= username %></label>
+        <button>GO</button>
+      </form>
+      <% } %>
+
+      <form action="/login" method="POST" >
+        <label for="email"> enter an email: </label>
+        <input type="email" name="email">
+        <label for="password"> enter a password: </label>
+        <input type="password" name="password">
+        <button> submit </button>
+      </form>
+
+    </body>
+</html>

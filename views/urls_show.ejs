@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<% include partials/header %>
+<% include partials/_header %>
   <head>
-    <title>TinyApp</title>
+    <title>Tiny App -- UPDATE</title>
   </head>
     <body>
 
       <form method="POST" action="/urls/" style="margin:150px;">
-        <label for="shortURL">Short URL: <%= shortURL %></label>
+        <label for="shortURL">UPDATE: <%= shortURL %></label>
         <input id="shortURL" type="text" name="longURL" placeholder=<%= longURL %>
         <input type="submit" value>
+        <button> submit </button>
       </form>
     </body>
 </html>
