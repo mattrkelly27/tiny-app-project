@@ -5,10 +5,9 @@
   </head>
     <body>
       <% include partials/_header %>
-
+      <h2>LOGIN</h2>
       <% if (!user_ID) { %>
         <form action="/login" method="POST" >
-          <label for="login"> LOGIN: </label>
           <label for="email"> enter an email: </label>
           <input type="email" name="email">
           <label for="password"> enter a password: </label>

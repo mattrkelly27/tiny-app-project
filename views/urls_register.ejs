@@ -1,24 +1,18 @@
 <!DOCTYPE html>
+<% include partials/_header %>
 <html lang="en">
   <head>
     <title>Tiny App -- REGISTER</title>
   </head>
   <body>
-    <% include partials/_header %>
-
-
-
-      <form action="/register" method="POST" >
-        <label for="register"> REGISTER: </label>
-        <label for="email"> enter an email: </label>
-        <input type="email" name="email">
-        <label for="password"> enter a password: </label>
-        <input type="password" name="password">
-        <button> submit </button>
-      </form>
-
-
-
+    <h2>REGISTER</h2>
+    <form action="/register" method="POST" >
+      <label for="email"> enter an email: </label>
+      <input type="email" name="email">
+      <label for="password"> enter a password: </label>
+      <input type="password" name="password">
+      <button> submit </button>
+    </form>
 
   </body>
 </html>

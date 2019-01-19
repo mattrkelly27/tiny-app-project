@@ -1,23 +1,38 @@
 <header>TINYAPP</header>
-<p><%= user_ID %></p>
-
-<form method="GET" action="/login">
-  <label for="login"> LOGIN & LOGOUT </label>
-  <button>GO</button>
-</form>
-
-<form method="GET" action="/register">
-  <label for="register"> REGISTER: </label>
-  <button>GO</button>
-</form>
-
-
-<br>
-
-
-
-</br>
 
 
 
 
+  <% if (user_ID) { %>
+
+      <form method="POST" action="/urls/logout">
+        <label for="logout"> LOGOUT: </label>
+        <button>GO</button>
+      </form>
+        <br>
+
+
+
+
+        </br>
+
+      <% } else { %>
+
+        <form method="GET" action="/login">
+          <label for="login"> LOGIN: </label>
+          <button>GO</button>
+        </form>
+
+        <form method="GET" action="/register">
+          <label for="register"> REGISTER: </label>
+          <button>GO</button>
+        </form>
+        <br>
+
+
+
+        </br>
+
+
+
+      <% } %>

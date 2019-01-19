@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-
+<% include partials/_header %>
 <html lang="en">
   <head>
-    <title>Tiny App -- HOMEPAGE</title>
+    <title>Tiny App -- URL LIBRARY</title>
   </head>
   <body>
-    <% include partials/_header %>
-    <h2>URLs</h2>
+
+    <h2>URL LIBRARY</h2>
     <ul>
       <% for (var key in urls) { %>
         <li> shortURL:
-          <%= key        %> longURL: %>
-          <%= urls[key] %>
+          <%= key %> longURL: %>
+          <%= urls[key].longURL %>
           <form method="POST" action="/urls/<%= key %>/delete">
             <button>DELETE &#x1f5d1 </button>
           </form>
