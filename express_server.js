@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 
 
 
-var app = express();
+var app = express();  //ser variable app to express server -- used in handlers
 
 
 
@@ -21,7 +21,7 @@ var PORT = 8080; // default port 8080
 
 
 
-var urlDatabase = {
+var urlDatabase = {     //user database that stores short and long urls
   "b2xVn2": {
     longURL: "http://www.lighthouselabs.ca",
     user_ID: "userRandomID"
@@ -37,7 +37,7 @@ var urlDatabase = {
 
 
 
-const users = {
+const users = {     //user database that stores passwords and emails
   "userRandomID": {
     id: "userRandomID",
     email: "user@example.com",
@@ -54,14 +54,14 @@ const users = {
 
 
 
-const bodyParser = require("body-parser");
+const bodyParser = require("body-parser");      //middleware -- parse incoming request bodies in a middleware before your handlers
 app.use(bodyParser.urlencoded({extended: true}));
 
 
 
 
 
-const cookieSession = require('cookie-session');
+const cookieSession = require('cookie-session');  //encrypts cookies sent to webpage
 app.use(cookieSession({
   name: 'session',
   keys: ['key1', 'key2']
@@ -77,7 +77,7 @@ app.set("view engine", "ejs");
 
 
 
-app.get("/", (req, res) => {
+app.get("/", (req, res) => {   // '/' screen prints 'hello'
   res.send("Hello!");
 });
 
@@ -85,7 +85,7 @@ app.get("/", (req, res) => {
 
 
 
-app.get("/hello", (req, res) => {
+app.get("/hello", (req, res) => { // '/hello' screen prints 'hello world'
   let templateVars = {
     greeting: 'Hello World!'
   };
@@ -96,7 +96,7 @@ app.get("/hello", (req, res) => {
 
 
 
-app.get("/urls.json", (req, res) => {
+app.get("/urls.json", (req, res) => {  // easy way to see current urlDatabase
   res.json(urlDatabase);
 });
 
@@ -104,7 +104,7 @@ app.get("/urls.json", (req, res) => {
 
 
 
-app.get("/users.json", (req, res) => {
+app.get("/users.json", (req, res) => {  //easy way to see users database
   res.json(users);
 });
 
@@ -128,7 +128,7 @@ app.get("/urls/new", (req, res) => {    //this is the 'add a new url' page
 
 
 
-app.get("/urls/:id", (req, res) => {
+app.get("/urls/:id", (req, res) => {  //edit existing urls
    if (req.session.user_ID !== urlDatabase[req.params.id]['user_ID']) {
     res.send('Cannot edit!');
   }
@@ -144,7 +144,7 @@ app.get("/urls/:id", (req, res) => {
 
 
 
-app.get("/urls", (req, res) => {
+app.get("/urls", (req, res) => {  // 'main' page -- lists the **signed in** users urls
   if (!req.session.user_ID) {
     res.redirect("/login");
   }
@@ -159,7 +159,7 @@ app.get("/urls", (req, res) => {
 
 
 
-app.get("/u/:shortURL", (req, res) => {
+app.get("/u/:shortURL", (req, res) => {  // if not signed in you can see this page of short urls
  let templateVars = {
     user_ID: req.session.user_ID,
     urls: shortUrls()
@@ -171,7 +171,7 @@ app.get("/u/:shortURL", (req, res) => {
 
 
 
-app.get("/register", (req, res) => {
+app.get("/register", (req, res) => {  //register page -- you need to register before you can save and view urls
   let templateVars = {
     shortURL: req.params.id,
     longURL: urlDatabase[req.params.id],
@@ -184,7 +184,7 @@ app.get("/register", (req, res) => {
 
 
 
-app.get("/login", (req, res) => {
+app.get("/login", (req, res) => {  // login page -- you must login to view your urls
    let templateVars = {
     shortURL: req.params.id,
     longURL: urlDatabase[req.params.id],
@@ -199,7 +199,12 @@ app.get("/login", (req, res) => {
 
 
 
-app.post('/login', (req, res) => {
+
+
+
+
+
+app.post('/login', (req, res) => {    // references the users database to sees if you are an existing user
   let userFound = authenticateUser(req.body.email, req.body.password);
   if (userFound) {
     req.session.user_ID = userFound.id;
@@ -213,7 +218,7 @@ app.post('/login', (req, res) => {
 
 
 
-app.post('/register', (req, res) => {
+app.post('/register', (req, res) => {         // creates a new user in the users database
   if (req.body.email === "" || req.body.password === "" || isEmailTaken(req.body.email)) {
     res.redirect('/register');
     return console.log("400 bad request");
@@ -230,7 +235,7 @@ app.post('/register', (req, res) => {
 
 
 
-app.post('/urls/login', (req, res) => {
+app.post('/urls/login', (req, res) => {     //when the user logs in the user_ID is set to the session cookie
   req.session.user_ID = req.body.user_ID;
   res.redirect('/urls');
 });
@@ -239,7 +244,7 @@ app.post('/urls/login', (req, res) => {
 
 
 
-app.post('/urls/logout', (req, res) => {
+app.post('/urls/logout', (req, res) => {  //when the user logs out the session cookie is deleted
   req.session = null;
   res.redirect('/urls');
 });
@@ -248,7 +253,7 @@ app.post('/urls/logout', (req, res) => {
 
 
 
-app.post('/urls/:id/delete', (req, res) => {
+app.post('/urls/:id/delete', (req, res) => {  //this will delete a url from the urlDatabase
   if (req.session.user_ID !== urlDatabase[req.params.id]['user_ID']) {
     res.send('cannot delete!');
   }
@@ -260,7 +265,7 @@ app.post('/urls/:id/delete', (req, res) => {
 
 
 
-app.post('/urls/:id', (req, res) => {
+app.post('/urls/:id', (req, res) => {  //edit a long url inside the urlDatabase
   let shortURL = req.params.id;
   let url = urlDatabase[shortURL];
   let longURL = req.body.longURL;
@@ -272,7 +277,7 @@ app.post('/urls/:id', (req, res) => {
 
 
 
-app.post("/urls", (req, res) => {
+app.post("/urls", (req, res) => {  //add a new url and attatch it to a short url -- whish is a random string
   console.log("this is whole req.body ", req.body);
   let longURL = req.body.longURL;
   let user_ID = req.session.user_ID;
@@ -292,7 +297,7 @@ app.listen(PORT, () => {
 
 
 
-function shortUrls() {
+function shortUrls() {  //creates a database for only short urls
   let shortUrlDatabase = {};
   for (let shortUrl in urlDatabase) {
     shortUrlDatabase[shortUrl] = 'shortUrl';
@@ -304,7 +309,7 @@ function shortUrls() {
 
 
 
-function authenticateUser(email, password) {
+function authenticateUser(email, password) {  //compares input email and password to email and encrypted password in urlDatabase
   for (let key in users) {
     if (users[key].email === email) {
       if(bcrypt.compareSync(password, users[key].password)) {
@@ -319,7 +324,7 @@ function authenticateUser(email, password) {
 
 
 
-function urlsForUser(id) {
+function urlsForUser(id) {  //looks at urlDatabase -- creates an object of just that user's urls
 
   let totalUrls = {};
 
@@ -340,7 +345,7 @@ function urlsForUser(id) {
 
 
 
-function checkUserNamePassword(email, password){
+function checkUserNamePassword(email, password){  //looks at users database -- is email or password taken?
   for (const userId in users) {
     const user = users[userId];
     if( user.email === email && user.password === password) {
@@ -353,7 +358,7 @@ function checkUserNamePassword(email, password){
 
 
 
-function isEmailTaken(email) {
+function isEmailTaken(email) {  //looks at users database to find out if an email exists already
   for (const userId in users) {
     const user = users[userId];
     if (user.email === email) {
@@ -367,7 +372,7 @@ function isEmailTaken(email) {
 
 
 
-function generateRandomString() {
+function generateRandomString() {  //generates a random string -- used for making id's
   let text = "";
   let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
