@@ -21,12 +21,12 @@ var PORT = 8080; // default port 8080
 var urlDatabase = {
   "b2xVn2": {
     longURL: "http://www.lighthouselabs.ca",
-    user_ID: "old_user"
+    user_ID: "userRandomID"
   },
 
   "9sm5xK": {
     longURL: "http://www.google.com",
-    user_ID: "old_user"
+    user_ID: "userRandomID"
   }
 };
 
@@ -37,12 +37,12 @@ const users = {
   "userRandomID": {
     id: "userRandomID",
     email: "user@example.com",
-    password: "123" //"$2b$10$NSXez7Ri7K1x67ggBvnhIOP0uHE0TJMFZZv8SbS1fYaDFrbcGHcUa"
+    password: "$2b$10$NSXez7Ri7K1x67ggBvnhIOP0uHE0TJMFZZv8SbS1fYaDFrbcGHcUa"
   },
  "user2RandomID": {
     id: "user2RandomID",
     email: "user2@example.com",
-    password: "123" //"$2b$10$NSXez7Ri7K1x67ggBvnhIOP0uHE0TJMFZZv8SbS1fYaDFrbcGHcUa"
+    password: "$2b$10$NSXez7Ri7K1x67ggBvnhIOP0uHE0TJMFZZv8SbS1fYaDFrbcGHcUa"
   }
 }
 
@@ -201,14 +201,8 @@ app.get("/login", (req, res) => {
 app.post('/login', (req, res) => {
 
 
-  console.log(req.body.password);
-  console.log(req.body.email);
 
-
-  console.log(checkUserNamePassword(req.body.email, req.body.password));
-
-
-  let userFound = checkUserNamePassword(req.body.email, req.body.password);
+  let userFound = authenticateUser(req.body.email, req.body.password);
   if (userFound) {
     res.cookie('user_ID', userFound.id);
     res.redirect('/urls');
@@ -219,6 +213,8 @@ app.post('/login', (req, res) => {
   }
 
 });
+
+
 
 
 
@@ -249,8 +245,6 @@ app.post('/register', (req, res) => {
 
 
 
-
-
 app.post('/urls/login', (req, res) => {
   res.cookie("user_ID", req.body.user_ID);
   res.redirect('/urls');
@@ -273,7 +267,7 @@ app.post('/urls/:id/delete', (req, res) => {
     res.send('cannot delete!');
   }
 
-  delete urlDatabase['req.params.id'];
+  delete urlDatabase[req.params.id];
 
   res.redirect('/urls');
 });
@@ -282,10 +276,6 @@ app.post('/urls/:id/delete', (req, res) => {
 
 
 app.post('/urls/:id', (req, res) => {
-
-  // if (req.cookies.user_ID !== urlDatabase[req.params.id]['user_ID']) {
-  //   res.send('cannot edit!');
-  // }
 
   let shortURL = req.params.id;
 
@@ -338,6 +328,20 @@ function shortUrls() {
 
   return shortUrlDatabase;
 
+}
+
+
+
+
+function authenticateUser(email, password) {
+  for (let key in users) {
+    if (users[key].email === email) {
+      if(bcrypt.compareSync(password, users[key].password)) {
+        return users[key];
+      }
+    }
+  }
+  return false;
 }
 
 

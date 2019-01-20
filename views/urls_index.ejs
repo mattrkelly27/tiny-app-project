@@ -2,11 +2,11 @@
 <% include partials/_header %>
 <html lang="en">
   <head>
-    <title>Tiny App -- URL LIBRARY</title>
+    <title>Tiny App -- <%= user_ID %>'s URL LIBRARY</title>
   </head>
   <body>
 
-    <h2>URL LIBRARY</h2>
+    <h2><%= user_ID %>'s URL LIBRARY</h2>
     <ul>
       <% for (var key in urls) { %>
         <li> shortURL:
@@ -16,7 +16,7 @@
             <button>DELETE &#x1f5d1 </button>
           </form>
           <form method="GET" action="/urls/<%= key %>">
-            <button> edit </button>
+            <button> EDIT </button>
           </form>
         </li>
       <% } %>
