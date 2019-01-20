@@ -7,6 +7,12 @@
   <body>
 
     <h2><%= user_ID %>'s URL LIBRARY</h2>
+
+    <form method="GET" action="/urls/new">
+        <label for="new"> add a new URL: </label>
+        <button>GO</button>
+      </form>
+
     <ul>
       <% for (var key in urls) { %>
         <li> shortURL:
