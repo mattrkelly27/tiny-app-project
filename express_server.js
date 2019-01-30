@@ -42,6 +42,11 @@ app.use(cookieSession({
 
 app.set("view engine", "ejs");
 
+
+
+
+
+
 app.get("/", (req, res) => {   // '/' screen prints 'hello'
   res.send("Hello!");
 });
