@@ -43,10 +43,6 @@ app.use(cookieSession({
 app.set("view engine", "ejs");
 
 
-
-
-
-
 app.get("/", (req, res) => {   // '/' screen prints 'hello'
   res.send("Hello!");
 });
@@ -130,14 +126,6 @@ app.get("/login", (req, res) => {  // login page -- you must login to view your 
 });
 
 
-
-
-
-
-
-
-
-
 app.post('/login', (req, res) => {    // references the users database to sees if you are an existing user
   let userFound = authenticateUser(req.body.email, req.body.password);
   if (userFound) {
@@ -198,9 +186,6 @@ app.post("/urls", (req, res) => {  //add a new url and attatch it to a short url
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
-
-
-
 
 
 function shortUrls() {  //creates a database for only short urls
