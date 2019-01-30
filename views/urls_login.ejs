@@ -1,10 +1,10 @@
 <!DOCTYPE html>
+ <% include partials/_header %>
 <html lang="en">
   <head>
     <title>Tiny App -- LOGIN</title>
   </head>
     <body>
-      <% include partials/_header %>
       <h2>LOGIN</h2>
       <% if (!user_ID) { %>
         <form action="/login" method="POST" >

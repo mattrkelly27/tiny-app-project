@@ -44,7 +44,8 @@ app.set("view engine", "ejs");
 
 
 app.get("/", (req, res) => {   // '/' screen prints 'hello'
-  res.send("Hello!");
+
+  res.redirect("/urls");
 });
 
 app.get("/hello", (req, res) => { // '/hello' screen prints 'hello world'
@@ -102,7 +103,8 @@ app.get("/u/:shortURL", (req, res) => {  // if not signed in you can see this pa
     user_ID: req.session.user_ID,
     urls: shortUrls()
   };
-  res.render("urls_index", templateVars);
+  //res.render("urls_index", templateVars);
+  res.redirect("/urls");
 });
 
 app.get("/register", (req, res) => {  //register page -- you need to register before you can save and view urls
@@ -138,8 +140,8 @@ app.post('/login', (req, res) => {    // references the users database to sees i
 
 app.post('/register', (req, res) => {         // creates a new user in the users database
   if (req.body.email === "" || req.body.password === "" || isEmailTaken(req.body.email)) {
-    res.redirect('/register');
-    return console.log("400 bad request");
+    // res.redirect('/register');
+    return res.send("400 bad request");
   }
   let password = req.body.password;
   let hashedPassword = bcrypt.hashSync(password, 10);
