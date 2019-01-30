@@ -90,12 +90,14 @@ app.get("/urls/:id", (req, res) => {  //edit existing urls
 app.get("/urls", (req, res) => {  // 'main' page -- lists the **signed in** users urls
   if (!req.session.user_ID) {
     res.redirect("/login");
+  } else {
+      let templateVars = {
+      user_ID: req.session.user_ID,
+      urls: urlsForUser(req.session.user_ID)
+    };
+    res.render("urls_index", templateVars);
   }
-  let templateVars = {
-    user_ID: req.session.user_ID,
-    urls: urlsForUser(req.session.user_ID)
-  };
-  res.render("urls_index", templateVars);
+
 });
 
 app.get("/u/:shortURL", (req, res) => {  // if not signed in you can see this page of short urls
